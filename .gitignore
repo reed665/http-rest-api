@@ -4,3 +4,4 @@ apiserver.exe
 
 # configs
 configs/apiserver.toml
+configs/apiserver_test.toml

@@ -9,3 +9,8 @@ log_level = "debug"
 database_url = "host=localhost user=postgres password=userpass dbname=restapi_dev sslmode=disable"
 
 ```
+
+## default configs/apiserver_test.toml
+```toml
+database_url = "host=localhost user=postgres password=userpass dbname=restapi_test sslmode=disable"
+```

@@ -9,7 +9,7 @@ import (
 )
 
 func TestUserRepository_Create(t *testing.T) {
-	s, teardown := store.TestStore(t, databaseURL)
+	s, teardown := store.TestStore(t, config.DatabaseURL)
 	defer teardown("users")
 
 	u, err := s.User().Create(&model.User{
