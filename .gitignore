@@ -1,7 +1,7 @@
 # build files
-apiserver
-apiserver.exe
+/apiserver
+/apiserver.exe
 
 # configs
-configs/apiserver.toml
-configs/apiserver_test.toml
+/configs/apiserver.toml
+/configs/apiserver_test.toml
