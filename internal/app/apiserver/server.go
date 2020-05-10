@@ -50,8 +50,12 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *server) configureRouter() {
-	s.router.HandleFunc("/users", s.handleUsersCreate()).Methods("POST")
-	s.router.HandleFunc("/sessions", s.handleSessionsCreate()).Methods("POST")
+	s.router.HandleFunc("/users", s.handleUsersCreate()).Methods(http.MethodPost)
+	s.router.HandleFunc("/sessions", s.handleSessionsCreate()).Methods(http.MethodPost)
+
+	private := s.router.PathPrefix("/private").Subrouter()
+	private.Use(s.authenticateUser)
+	private.HandleFunc("/whoami", s.handleWhoami()).Methods(http.MethodGet)
 }
 
 func (s *server) authenticateUser(next http.Handler) http.Handler {
@@ -101,6 +105,12 @@ func (s *server) handleUsersCreate() http.HandlerFunc {
 
 		u.Sanitize()
 		s.respond(w, r, http.StatusCreated, u)
+	}
+}
+
+func (s *server) handleWhoami() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		s.respond(w, r, http.StatusOK, r.Context().Value(ctxKeyUser).(*model.User))
 	}
 }
 
